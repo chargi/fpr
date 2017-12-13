@@ -1,6 +1,6 @@
 package com.fpr.exercise;
 
-    /*
+/*
     1 Pure Polymorphic Map
 
     Implement Haskell’s higher-order function map in C++ or Java.
@@ -29,7 +29,7 @@ package com.fpr.exercise;
     • For the function parameter of map, use the std: function type in C++ and
     a Single Abstract Method (SAM) Interface in Java. In both cases, use
     lambda expressions to define each function.
-     */
+ */
 
 import java.util.List;
 import java.util.function.Function;
