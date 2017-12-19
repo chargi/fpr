@@ -24,15 +24,16 @@ package com.fpr.exercise;
     • As with the map exercise, make sure your solution is pure and polymorphic.
 */
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BinaryOperator;
 
 public class PurePolymorphicFold {
-    public static <T> List<T> polyFold(List<T> argList, T initValue, BinaryOperator<T> lambda) {
+    public static <T> T polyFold(List<T> argList, T initValue, BinaryOperator<T> lambda) {
         if (argList.size() == 0)
-            return argList;
+            return initValue;
 
-        List <T> resList = argList;
+        List <T> resList = new ArrayList<>(argList);;
 
         //Do initial value calculation
         T obj = resList.get(0);
@@ -40,7 +41,7 @@ public class PurePolymorphicFold {
         resList.set(0,initialCalc);
 
         resList = polyFold(resList,lambda);
-        return resList;
+        return resList.get(0);
     }
 
     private static <T> List<T> polyFold(List<T> result, BinaryOperator<T> lambda) {

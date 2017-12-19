@@ -23,13 +23,13 @@ public class Main {
 
         //PolyMap
         {
-            List<Integer> test1 = new ArrayList<>(Arrays.asList(1, 4, 10, 15));
+            List<Integer> test1 = new ArrayList<>(Arrays.asList(1, 2, 3));
             List<Double> test2 = new ArrayList<>(Arrays.asList(.0, 1.5, 200.09));
             List<String> test3 = new ArrayList<>(Arrays.asList("Peter", "Paula", "Fritz", "Party"));
 
 
             System.out.println("===Map===\n");
-            PurePolymorphicMap.polyMap(test1, (x) -> x + x)
+            PurePolymorphicMap.polyMap(test1, (x) -> x * x)
                     .stream()
                     .forEach(lambdaPrint);
             PurePolymorphicMap.polyMap(test2, (x) -> x + 100)
@@ -43,20 +43,48 @@ public class Main {
         //PolyFold
         {
             System.out.println("===Fold===\n");
-            List<Integer> test1 = new ArrayList<>(Arrays.asList(1, 4, 10, 15));
+            List<Integer> test1 = new ArrayList<>(Arrays.asList(1, 2, 3));
             List<Double> test2 = new ArrayList<>(Arrays.asList(.0, 1.5, 200.09));
             List<String> test3 = new ArrayList<>(Arrays.asList("Peter", "Paula", "Fritz", "Party"));
 
 
-            PurePolymorphicFold.polyFold(test1, 0, (x, y) -> x + y)
+            System.out.println(
+                    PurePolymorphicFold.polyFold(test1, 0, (x, y) -> x + y)
+            );
+
+            System.out.println(
+                    PurePolymorphicFold.polyFold(test1, 0, (x, y) -> (x + y) * 3)
+            );
+
+            System.out.println(
+                    PurePolymorphicFold.polyFold(test2, 1.0, (x, y) -> x * y)
+            );
+
+            System.out.println(
+                    PurePolymorphicFold.polyFold(test3, "Themen: ", (x, y) -> x + y + ", ")
+            );
+        }
+        //PolyScan
+        {
+            System.out.println("===Scan===\n");
+            List<Integer> test1 = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+            List<Double> test2 = new ArrayList<>(Arrays.asList(0.5, 1.5, 200.09));
+            List<String> test3 = new ArrayList<>(Arrays.asList("Peter", "Paula", "Fritz", "Party"));
+
+
+            PurePolymorphicScan.polyScan(test1, 0, (x, y) -> x+y)
                     .stream()
                     .forEach(lambdaPrint);
 
-            PurePolymorphicFold.polyFold(test2, 1.0, (x, y) -> x * y)
+            PurePolymorphicScan.polyScan(test1, 3, (x, y) -> x*y)
                     .stream()
                     .forEach(lambdaPrint);
 
-            PurePolymorphicFold.polyFold(test3, "Themen: ", (x, y) -> x + y + ", ")
+            PurePolymorphicScan.polyScan(test2, 1.0, (x, y) -> x * y)
+                    .stream()
+                    .forEach(lambdaPrint);
+
+            PurePolymorphicScan.polyScan(test3, "Themen: ", (x, y) -> x + y + ", ")
                     .stream()
                     .forEach(lambdaPrint);
         }
@@ -66,30 +94,6 @@ public class Main {
 
 
 
-
-    /*
-    3 Pure Polymorphic Scan
-
-    Implement Haskell’s higher-order function scan in C++ or Java.
-    scans’s signature is scan :: (b −> a −> b) −> b −> [a] −> [b], which
-    means that the function has three arguments:
-    1. a function f :: b −> a −> b, which means a function with two arguments,
-    returning a result of the first argument’s type.
-    2. an initial scan value of type b.
-    3. a list of elements of type a.
-    scan is similar to fold, but returns a list successive reduced values:
-    • apply f to the initial value and the first element of the input list gives the
-    first element of the output list.
-    • the nth output element is f applied to the nth input element and the
-    n − 1st output element.
-    • repeat/recurse until you reach the end of the input list.
-    Implement at three example inputs for your scan function. Each
-    input must be of a different type (int, string, float, a type/class you define,. . . ).
-
-    • Example: scan + 0 [1 2 3 4] should return [1 3 6 10]
-    • Example: scan ∗ 3 [1 2 3 4] should return [3 6 18 72]
-    • As with the map exercise, make sure your solution is pure and polymorphic.
-     */
 
     /*
     4 Higher-Order Divide and Conquer

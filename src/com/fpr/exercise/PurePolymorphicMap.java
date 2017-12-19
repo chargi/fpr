@@ -31,12 +31,16 @@ package com.fpr.exercise;
     lambda expressions to define each function.
  */
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 public class PurePolymorphicMap {
     public static <T> List<T> polyMap(List<T> argList, Function<T,T> lambda) {
-        List<T> resList = argList;
+        if (argList.size() == 0)
+            return new ArrayList<T>();
+
+        List <T> resList = new ArrayList<>(argList);
         int index = 0;
         resList = polyMap(resList,lambda,index);
         return resList;
