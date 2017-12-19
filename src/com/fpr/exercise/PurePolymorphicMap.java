@@ -42,7 +42,7 @@ public class PurePolymorphicMap {
         return resList;
     }
 
-    public static <T> List<T> polyMap(List<T> result, Function<T,T> lambda, int i) {
+    private static <T> List<T> polyMap(List<T> result, Function<T,T> lambda, int i) {
         if (result.size() == i)
             return result;
 

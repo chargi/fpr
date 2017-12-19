@@ -21,19 +21,45 @@ public class Main {
     public static void main(String[] args) {
         Consumer<Object> lambdaPrint = System.out::println;
 
-        List<Integer> test1 = new ArrayList<>(Arrays.asList(1,4,10,15));
-        List<Double> test2 = new ArrayList<>(Arrays.asList(.0,1.5,200.09));
-        List<String> test3 = new ArrayList<>(Arrays.asList("Peter","Paula","Fritz","Party"));
+        //PolyMap
+        {
+            List<Integer> test1 = new ArrayList<>(Arrays.asList(1, 4, 10, 15));
+            List<Double> test2 = new ArrayList<>(Arrays.asList(.0, 1.5, 200.09));
+            List<String> test3 = new ArrayList<>(Arrays.asList("Peter", "Paula", "Fritz", "Party"));
 
-        PurePolymorphicMap.polyMap(test1,(x) -> x*x)
-                .stream()
-                .forEach(lambdaPrint);
-        PurePolymorphicMap.polyMap(test2,(x) -> x*100)
-                .stream()
-                .forEach(lambdaPrint);
-        PurePolymorphicMap.polyMap(test3,(x) -> (String)x.concat("LAMBDA"))
-                .stream()
-                .forEach(lambdaPrint);
+
+            System.out.println("===Map===\n");
+            PurePolymorphicMap.polyMap(test1, (x) -> x + x)
+                    .stream()
+                    .forEach(lambdaPrint);
+            PurePolymorphicMap.polyMap(test2, (x) -> x + 100)
+                    .stream()
+                    .forEach(lambdaPrint);
+            PurePolymorphicMap.polyMap(test3, (x) -> (String) x.concat(" "))
+                    .stream()
+                    .forEach(lambdaPrint);
+        }
+
+        //PolyFold
+        {
+            System.out.println("===Fold===\n");
+            List<Integer> test1 = new ArrayList<>(Arrays.asList(1, 4, 10, 15));
+            List<Double> test2 = new ArrayList<>(Arrays.asList(.0, 1.5, 200.09));
+            List<String> test3 = new ArrayList<>(Arrays.asList("Peter", "Paula", "Fritz", "Party"));
+
+
+            PurePolymorphicFold.polyFold(test1, 0, (x, y) -> x + y)
+                    .stream()
+                    .forEach(lambdaPrint);
+
+            PurePolymorphicFold.polyFold(test2, 1.0, (x, y) -> x * y)
+                    .stream()
+                    .forEach(lambdaPrint);
+
+            PurePolymorphicFold.polyFold(test3, "Themen: ", (x, y) -> x + y + ", ")
+                    .stream()
+                    .forEach(lambdaPrint);
+        }
     }
 
 
