@@ -24,17 +24,23 @@ public class Main {
         //PolyMap
         {
             List<Integer> test1 = new ArrayList<>(Arrays.asList(1, 2, 3));
-            List<Double> test2 = new ArrayList<>(Arrays.asList(.0, 1.5, 200.09));
+            List<Double> test2 = new ArrayList<>(Arrays.asList(0.,2.5,2000.999));
             List<String> test3 = new ArrayList<>(Arrays.asList("Peter", "Paula", "Fritz", "Party"));
 
 
             System.out.println("===Map===\n");
-            PurePolymorphicMap.polyMap(test1, (x) -> x * x)
+            PurePolymorphicMap.polyMap(test1, (x) -> x*x)
                     .stream()
                     .forEach(lambdaPrint);
-            PurePolymorphicMap.polyMap(test2, (x) -> x + 100)
-                    .stream()
+
+            List<Boolean> test1Bool = PurePolymorphicMap.polyMap(test1, (x) -> x > 2);
+            test1Bool.stream()
                     .forEach(lambdaPrint);
+
+            List<Long> test2Result = PurePolymorphicMap.polyMap(test2, (x) -> (long)(x+100));
+            test2Result.stream()
+                    .forEach(lambdaPrint);
+
             PurePolymorphicMap.polyMap(test3, (x) -> (String) x.concat(" "))
                     .stream()
                     .forEach(lambdaPrint);

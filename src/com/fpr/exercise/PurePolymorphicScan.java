@@ -16,6 +16,9 @@ import java.util.function.BinaryOperator;
  * commas, e.g. [1 2 3 4] is printed as [1, 2, 3, 4]
  *
  */
+
+//TODO: auf <T,U> umbauen
+
 public class PurePolymorphicScan {
     public static <T> List<T> polyScan(List<T> argList, T initValue, BinaryOperator<T> lambda) {
         if (argList.size() == 0)

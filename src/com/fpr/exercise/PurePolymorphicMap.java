@@ -36,25 +36,26 @@ import java.util.List;
 import java.util.function.Function;
 
 public class PurePolymorphicMap {
-    public static <T> List<T> polyMap(List<T> argList, Function<T,T> lambda) {
+    public static <T,U> List<U> polyMap(List<T> argList, Function<T,U> lambda) {
         if (argList.size() == 0)
-            return new ArrayList<T>();
+            return new ArrayList<U>();
 
-        List <T> resList = new ArrayList<>(argList);
+        List <T> tmpList = new ArrayList<>(argList);
+        List <U> resList = new ArrayList<>();
         int index = 0;
-        resList = polyMap(resList,lambda,index);
+        resList = polyMap(tmpList,resList,lambda,index);
         return resList;
     }
 
-    private static <T> List<T> polyMap(List<T> result, Function<T,T> lambda, int i) {
-        if (result.size() == i)
+    private static <T,U> List<U> polyMap(List<T> argList, List<U> result, Function<T,U> lambda, int i) {
+        if (argList.size() == i)
             return result;
 
-        T obj = result.get(i);
-        T resObj = lambda.apply(obj);
-        result.set(i,resObj);
+        T obj = argList.get(i);
+        U resObj = lambda.apply(obj);
+        result.add(resObj);
         int newIndex = i+1;
-        polyMap(result,lambda,newIndex);
+        polyMap(argList, result,lambda,newIndex);
         return result;
     }
 }
