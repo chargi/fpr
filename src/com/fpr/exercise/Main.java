@@ -1,16 +1,5 @@
 package com.fpr.exercise;
 
-/*
-    Functional Interfaces
-    Interface name Arguments Returns Example
-    Predicate<T> T boolean Has this album been released yet?
-    Consumer<T> T void Printing out a value
-    Function<T,R> T R Get the name from an Artist object
-    Supplier<T> None T A factory method
-    UnaryOperator<T> T T Logical not (!)
-    BinaryOperator<T> (T, T) T Multiplying two numbers (*)
- */
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,25 +13,23 @@ public class Main {
         //PolyMap
         {
             List<Integer> test1 = new ArrayList<>(Arrays.asList(1, 2, 3));
-            List<Double> test2 = new ArrayList<>(Arrays.asList(0.,2.5,2000.999));
+            List<Double> test2 = new ArrayList<>(Arrays.asList(0., 2.5, 2000.999));
             List<String> test3 = new ArrayList<>(Arrays.asList("Peter", "Paula", "Fritz", "Party"));
 
 
             System.out.println("===Map===\n");
-            PurePolymorphicMap.polyMap(test1, (x) -> x*x)
-                    .stream()
+            PurePolymorphicMap.polyMap(test1, (x) -> x * x)
                     .forEach(lambdaPrint);
 
             List<Boolean> test1Bool = PurePolymorphicMap.polyMap(test1, (x) -> x > 2);
-            test1Bool.stream()
+            test1Bool
                     .forEach(lambdaPrint);
 
-            List<Long> test2Result = PurePolymorphicMap.polyMap(test2, (x) -> (long)(x+100));
-            test2Result.stream()
+            List<Long> test2Result = PurePolymorphicMap.polyMap(test2, (x) -> (long) (x + 100));
+            test2Result
                     .forEach(lambdaPrint);
 
-            PurePolymorphicMap.polyMap(test3, (x) -> (String) x.concat(" "))
-                    .stream()
+            PurePolymorphicMap.polyMap(test3, (x) -> x.concat(" "))
                     .forEach(lambdaPrint);
         }
 
@@ -73,74 +60,91 @@ public class Main {
         //PolyScan
         {
             System.out.println("===Scan===\n");
-            List<Integer> test1 = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+            List<Integer> test1 = new ArrayList<>(Arrays.asList(1, 2, 3));
             List<Double> test2 = new ArrayList<>(Arrays.asList(0.5, 1.5, 200.09));
             List<String> test3 = new ArrayList<>(Arrays.asList("Peter", "Paula", "Fritz", "Party"));
 
+            List<Integer> test1Result = PurePolymorphicScan.polyScan((x, y) -> x + y, 0, test1);
 
-            PurePolymorphicScan.polyScan(test1, 0, (x, y) -> x+y)
-                    .stream()
+            test1Result
                     .forEach(lambdaPrint);
 
-            PurePolymorphicScan.polyScan(test1, 3, (x, y) -> x*y)
-                    .stream()
+            PurePolymorphicScan.polyScan((x, y) -> x * y, 3, test1)
                     .forEach(lambdaPrint);
 
-            PurePolymorphicScan.polyScan(test2, 1.0, (x, y) -> x * y)
-                    .stream()
+            PurePolymorphicScan.polyScan((x, y) -> x * y, 1.0, test2)
                     .forEach(lambdaPrint);
 
-            PurePolymorphicScan.polyScan(test3, "Themen: ", (x, y) -> x + y + ", ")
-                    .stream()
+            PurePolymorphicScan.polyScan((x, y) -> x + y + ", ", "Themen: ", test3)
                     .forEach(lambdaPrint);
         }
+
+        //Divide and Conquer
+        //QuickSort
+        {
+            System.out.println("===QuickSort===\n");
+            List<Integer> test1 = new ArrayList<>(Arrays.asList(1,18,5,3,8,8,5,10,8,12,22,19,4,2));
+            List<Integer> test2 = new ArrayList<>(Arrays.asList(100,500,3,4,7,9,-10));
+            List<Integer> test3 = new ArrayList<>(Arrays.asList(1,1,1,1,1));
+
+            QuickSort qs = new QuickSort();
+
+            List<Integer> test1Result = DnCHigherOrder.divideAndConquer(
+                qs.trivial,
+                qs.solve,
+                qs.divide,
+                qs.combine,
+                test1);
+            test1Result.forEach(lambdaPrint);
+
+            List<Integer> test2Result = DnCHigherOrder.divideAndConquer(
+                qs.trivial,
+                qs.solve,
+                qs.divide,
+                qs.combine,
+                test2);
+            test2Result.forEach(lambdaPrint);
+
+            List<Integer> test3Result = DnCHigherOrder.divideAndConquer(
+                qs.trivial,
+                qs.solve,
+                qs.divide,
+                qs.combine,
+                test3);
+            test3Result.forEach(lambdaPrint);
+
+        }
+
+        //BinarySearch
+        {
+            System.out.println("===BinarySearch===\n");
+
+            List<Integer> test1 = new ArrayList<>(Arrays.asList(1,18,5,3,8,8,5,10,8,12,22,19,4,2));
+            List<Integer> test2 = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10));
+
+            BinarySearch bs = new BinarySearch();
+
+            BinarySearch.SearchParams test1ctx = new BinarySearch.SearchParams(test1,8);
+            BinarySearch.SearchParams test2ctx = new BinarySearch.SearchParams(test2,10);
+
+            BinarySearch.SearchParams<Integer> test1result = DnCHigherOrder.divideAndConquer(
+                bs.trivial,
+                bs.solve,
+                bs.divide,
+                bs.combine,
+                test1ctx
+            );
+            System.out.println("Found "+test1result.getValue()+" in list "+test1result.getFoundValues()+" times.");
+
+            BinarySearch.SearchParams<Integer> test2result = DnCHigherOrder.divideAndConquer(
+                    bs.trivial,
+                    bs.solve,
+                    bs.divide,
+                    bs.combine,
+                    test2ctx
+            );
+            System.out.println("Found "+test2result.getValue()+" in list "+test2result.getFoundValues()+" times.");
+
+        }
     }
-
-
-
-
-
-
-    /*
-    4 Higher-Order Divide and Conquer
-
-    Implement a polymorphic higher-order function that solves problems with the
-    divide and conquer algorithm (for information, see: http://en.wikipedia.
-    org/wiki/Divide_and_conquer_algorithm) A divide and conquer (DaC) algorithm
-    on an input works as follows:
-    1. if the solution is trivial for the input, solve it.
-    2. if the solution is not trivial, divide the input list into two parts.
-    3. recursively solve each parts individually. (i.e., if their solution is
-    not trivial, divide them again)
-    4. combine both parts to the final result.
-    Implement a function divideAndConquer that takes four functions and one
-    DaC problem instance as input. The four functions represent the stages of
-    the divide and conquer algorithm:
-    1. trivial :: a −> bool: determine if an input can be solved
-    2. solve :: a −> b: solve a trivial input, return result of type b
-    3. divide :: a −> (a,a): divide the (non-trivial) input into two smaller inputs.
-    4. combine :: (b,b) −> b: combine two results of type b into one result.
-    The fifth and final input of divideAndConquer is the actual input problem to
-    solve.
-    Implement the following:
-    1. the quickSort algorithm using the divideAndConquer higher-order function.
-    2. a DaC algorithm that is not sorting (search the web for DaC examples)
-
-    The quickSort function from the course slides is a classic example of a divide
-    and conquer algorithm. It works as follows:
-    • the input type is a list [a], the output is a sorted list of the same type
-    • the input is trivial if the list has at most one element.
-    • the solution of a trivial list is the list itself, as it is already sorted.
-    • divide the list into two parts based on the pivot element: one part contains
-    all elements that are smaller than the pivot element, the second part all
-    others.
-    • combine two lists by simply appending one to the other (i.e., concatenate
-    them).
-    As with the previous exercises:
-    • make sure your solution is pure and polymorphic.
-    • use lambda expressions and std::function (C++) or SAMs (Java) to implement
-    function objects.
-     */
-
-
 }
